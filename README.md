@@ -1,4 +1,4 @@
-# talk-microservices-gokit
+# micro-novel
 
 ## How to build
 
