@@ -5,6 +5,8 @@ import (
 	"errors"
 
 	"github.com/aszeta/micro-novel/account/security"
+	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Service interface {
@@ -18,14 +20,21 @@ var (
 )
 
 type service struct {
-	redis string
+	db    *mongo.Client
+	redis *redis.Client
+	ctx   *context.Context
 }
 
-func NewService() *service {
-	return &service{}
+func NewService(ctx *context.Context, db *mongo.Client, redis *redis.Client) *service {
+	return &service{
+		redis: redis,
+		db:    db,
+		ctx:   ctx,
+	}
 }
 
 func (s *service) ValidateAccount(ctx context.Context, email, password string) (string, error) {
+
 	//@TODO create validation rules, using databases or something else
 	if email == "eminetto@gmail.com" && password != "1234567" {
 		return "", ErrInvalidUser

@@ -1,3 +1,5 @@
 app:
   port: ":8080"
   name: "Micro-Novel"
+database:
+  host:
